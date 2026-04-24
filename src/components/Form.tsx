@@ -1,6 +1,7 @@
 import "../index.css";
 import { useState } from "react";
 import { generateList } from "../utils/generateList";
+import { PackingList } from "./PackingList";
 
 export function Form() {
   const [name, setName] = useState("");
@@ -9,13 +10,17 @@ export function Form() {
   const [climate, setClimate] = useState("");
   const [activity, setActivity] = useState("");
   const [transport, setTransport] = useState("");
-
+  const [packingList, setPackingList] = useState<string[]>([]);
+const isValid =
+  name !== "" &&
+  destination !== "" &&
+  days > 0 &&
+  climate !== "" &&
+  activity !== "" &&
+  transport !== "";
   function showList() {
     const list = generateList(days, climate, activity, transport);
-
-    console.log("Name:", name);
-    console.log("Destination:", destination);
-    console.log("Packliste:", list);
+    setPackingList(list);
   }
 
   return (
@@ -65,7 +70,10 @@ export function Form() {
         <option>Auto</option>
       </select>
 
-      <button onClick={showList}>Liste generieren</button>
+      <button onClick={showList} disabled={!isValid}>
+        Liste generieren
+      </button>
+      <PackingList packingList={packingList} />
     </div>
   );
 }
