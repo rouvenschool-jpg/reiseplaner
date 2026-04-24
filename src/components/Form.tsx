@@ -1,5 +1,6 @@
 import "../index.css";
 import { useState } from "react";
+import { generateList } from "../utils/generateList";
 
 export function Form() {
   const [name, setName] = useState("");
@@ -9,14 +10,14 @@ export function Form() {
   const [activity, setActivity] = useState("");
   const [transport, setTransport] = useState("");
 
-function consoleShow() {
-  console.log("Name: " + name);
-  console.log("Destination: " + destination);
-  console.log("Dauer in Tagen: " + days);
-  console.log("Klima: " + climate);
-  console.log("Aktivität: " + activity);
-  console.log("Transport: " + transport);
-}
+  function showList() {
+    const list = generateList(days, climate, activity, transport);
+
+    console.log("Name:", name);
+    console.log("Destination:", destination);
+    console.log("Packliste:", list);
+  }
+
   return (
     <div className="form-card">
       <h2>Reise planen</h2>
@@ -64,7 +65,7 @@ function consoleShow() {
         <option>Auto</option>
       </select>
 
-      <button onClick={consoleShow}>Liste generieren</button>
+      <button onClick={showList}>Liste generieren</button>
     </div>
   );
 }
